@@ -13,6 +13,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate-history:
+    name: Validate commit history
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Install toolchain (mise)
+        uses: jdx/mise-action@v5
+      - name: Check commit history (cog)
+        run: cog check
+
   validate:
     name: Validate
     runs-on: ubuntu-latest

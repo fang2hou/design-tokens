@@ -300,6 +300,29 @@ function setupScrollNav(): void {
     });
   });
   const sections = [...scroller.querySelectorAll<HTMLElement>("section")];
+  scroller.addEventListener(
+    "wheel",
+    (event) => {
+      if (!(event instanceof WheelEvent) || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) {
+        return;
+      }
+      const section = event.target instanceof Element ? event.target.closest("section") : null;
+      if (section && section.scrollHeight > section.clientHeight + 1) {
+        const atTop = section.scrollTop <= 0;
+        const atBottom = section.scrollTop + section.clientHeight >= section.scrollHeight - 1;
+        if (
+          (!atTop && event.deltaY < 0) ||
+          (!atBottom && event.deltaY > 0) ||
+          (atTop && atBottom)
+        ) {
+          return;
+        }
+      }
+      event.preventDefault();
+      scroller.scrollLeft += event.deltaY;
+    },
+    { passive: false },
+  );
   const highlight = () => {
     const index = currentSectionIndex();
     links.forEach((link, i) => link.setAttribute("aria-current", String(i === index)));

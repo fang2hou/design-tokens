@@ -10,6 +10,7 @@ const primitives = [
   "tokens/primitives/color.json",
   "tokens/primitives/typography.json",
   "tokens/primitives/radius.json",
+  "tokens/primitives/shadow.json",
   "tokens/primitives/spacing.json",
 ];
 
@@ -71,6 +72,8 @@ function readTokenFiles() {
   const load = (path) => JSON.parse(readFileSync(join(root, path), "utf8"));
   return {
     semanticLight: load("tokens/semantic/color.light.json"),
+    semanticRadius: load("tokens/semantic/radius.json"),
+    shadowLight: load("tokens/semantic/shadow.light.json"),
     semanticDark: load("tokens/semantic/color.dark.json"),
     typography: load("tokens/primitives/typography.json"),
     radius: load("tokens/primitives/radius.json"),
@@ -95,18 +98,29 @@ function tailwindAdapter(tokens) {
   walk(tokens.semanticLight, "", true);
   walk(tokens.typography, "", false);
   walk(tokens.radius, "", false);
+  walk(tokens.semanticRadius, "", false);
+  walk(tokens.shadowLight, "", false);
   lines.push("  --spacing: var(--spacing-unit);");
   return `@theme inline {\n${lines.join("\n")}\n}\n`;
 }
 
 async function main() {
-  await buildCss(primitives, ["tokens/semantic/color.light.json"], ":root", "tokens.light.css");
   await buildCss(
     primitives,
-    ["tokens/semantic/color.dark.json"],
+    [
+      "tokens/semantic/color.light.json",
+      "tokens/semantic/radius.json",
+      "tokens/semantic/shadow.light.json",
+    ],
+    ":root",
+    "tokens.light.css",
+  );
+  await buildCss(
+    primitives,
+    ["tokens/semantic/color.dark.json", "tokens/semantic/shadow.dark.json"],
     ".dark",
     "tokens.dark.css",
-    "color.dark.json",
+    ".dark.json",
   );
 
   const lightCss = readFileSync(join(dist, "tokens.light.css"), "utf8");

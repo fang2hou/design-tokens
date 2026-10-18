@@ -1,0 +1,8 @@
+{
+  "$description": "Semantic elevation roles, dark mode.",
+  "shadow": {
+    "subtle": { "$value": "{shadow.dark.sm}" },
+    "card": { "$value": "{shadow.dark.md}" },
+    "overlay": { "$value": "{shadow.dark.lg}" }
+  }
+}

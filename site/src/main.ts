@@ -10,6 +10,7 @@ import "@fontsource/noto-serif-jp/400.css";
 import flatJson from "../../dist/tokens.flat.json";
 import "./styles/main.css";
 import { isLang, t, type Lang } from "./i18n";
+import { iconHtml, mountIcons } from "./icons";
 
 type Mode = "light" | "dark";
 
@@ -42,9 +43,13 @@ function applyLang(lang: Lang): void {
   for (const el of document.querySelectorAll<HTMLElement>("[data-i18n]")) {
     el.textContent = t(lang, el.dataset.i18n ?? "");
   }
+  for (const el of document.querySelectorAll<HTMLInputElement>("[data-i18n-placeholder]")) {
+    el.placeholder = t(lang, el.dataset.i18nPlaceholder ?? "");
+  }
   for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-lang]")) {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
   }
+  renderCalendar();
 }
 
 function applyMode(mode: Mode): void {
@@ -52,19 +57,23 @@ function applyMode(mode: Mode): void {
   localStorage.setItem("dt-theme", mode);
   document.documentElement.classList.toggle("dark", mode === "dark");
   const themeButton = document.querySelector<HTMLButtonElement>("#theme-toggle");
-  if (themeButton) themeButton.textContent = mode === "dark" ? "☀" : "☾";
+  if (themeButton) {
+    themeButton.innerHTML = `<span class="icon">${iconHtml(mode === "dark" ? "sun" : "moon")}</span>`;
+  }
   renderSemanticGrid();
 }
 
-function showToast(message: string): void {
+function showToast(message: string, undo = false): void {
   const toast = document.querySelector<HTMLElement>("#toast");
   if (!toast) return;
-  toast.textContent = message;
+  toast.querySelector("span")!.textContent = message;
+  const undoButton = toast.querySelector<HTMLButtonElement>("#toast-undo");
+  undoButton!.hidden = !undo;
   toast.dataset.visible = "true";
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
     toast.dataset.visible = "false";
-  }, 1200);
+  }, 2400);
 }
 
 async function copyToken(name: string): Promise<void> {
@@ -91,6 +100,19 @@ function renderSemanticGrid(): void {
     button.addEventListener("click", () => void copyToken(entry.name));
     grid.append(button);
   }
+}
+
+function renderHueStrips(): void {
+  const cover = document.querySelector<HTMLElement>("#cover-strip");
+  const stripLight = document.querySelector<HTMLElement>("#hue-strip-light");
+  const stripDark = document.querySelector<HTMLElement>("#hue-strip-dark");
+  const cells = (mode: "light" | "dark"): string =>
+    flat.palette[mode]
+      .map((entry) => `<div style="background-color:${entry.value}"></div>`)
+      .join("");
+  if (cover) cover.innerHTML = cells(currentMode === "dark" ? "dark" : "light");
+  if (stripLight) stripLight.innerHTML = cells("light");
+  if (stripDark) stripDark.innerHTML = cells("dark");
 }
 
 function renderPaletteTable(): void {
@@ -151,6 +173,156 @@ function setupSquircleClip(): void {
   path.setAttribute("transform", `translate(${(136 - size) / 2} ${(136 - size) / 2})`);
 }
 
+const RANGE_START = 1;
+const RANGE_END = 5;
+
+let viewYear = new Date().getFullYear();
+let viewMonth = new Date().getMonth();
+
+function monthLabel(lang: Lang, year: number, month: number): string {
+  return new Intl.DateTimeFormat(lang, { year: "numeric", month: "long" }).format(
+    new Date(year, month, 1),
+  );
+}
+
+function weekdayLabels(lang: Lang): string[] {
+  const formatter = new Intl.DateTimeFormat(lang, { weekday: "short" });
+  const base = new Date(2026, 9, 5);
+  return Array.from({ length: 7 }, (_, i) =>
+    formatter.format(new Date(base.getFullYear(), base.getMonth(), base.getDate() + i)),
+  );
+}
+
+function renderCalendar(): void {
+  const grid = document.querySelector<HTMLElement>("#calendar-grid");
+  const title = document.querySelector<HTMLElement>("#calendar-title");
+  if (!grid || !title) return;
+  title.textContent = monthLabel(currentLang, viewYear, viewMonth);
+  const weekdays = weekdayLabels(currentLang);
+  const firstDay = new Date(viewYear, viewMonth, 1);
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const daysInPrev = new Date(viewYear, viewMonth, 0).getDate();
+  const lead = (firstDay.getDay() + 6) % 7;
+  const cells: string[] = weekdays.map((day) => `<span class="calendar-weekday">${day}</span>`);
+  for (let i = lead - 1; i >= 0; i -= 1) {
+    cells.push(`<span class="calendar-day day-out">${daysInPrev - i}</span>`);
+  }
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const inRange = day > RANGE_START && day < RANGE_END;
+    const isEdge = day === RANGE_START || day === RANGE_END;
+    const cls = isEdge ? "day-range-end" : inRange ? "day-in-range" : "";
+    cells.push(`<button type="button" class="calendar-day ${cls}">${day}</button>`);
+  }
+  const tail = (7 - ((lead + daysInMonth) % 7)) % 7;
+  for (let day = 1; day <= tail; day += 1) {
+    cells.push(`<span class="calendar-day day-out">${day}</span>`);
+  }
+  grid.innerHTML = cells.join("");
+}
+
+function shiftMonth(delta: number): void {
+  viewMonth += delta;
+  if (viewMonth < 0) {
+    viewMonth = 11;
+    viewYear -= 1;
+  } else if (viewMonth > 11) {
+    viewMonth = 0;
+    viewYear += 1;
+  }
+  renderCalendar();
+}
+
+function setupCalendarControls(): void {
+  document
+    .querySelectorAll<HTMLElement>("#calendar .calendar-head button")
+    .forEach((button, index) => {
+      button.addEventListener("click", () => shiftMonth(index === 0 ? -1 : 1));
+    });
+  for (const chip of document.querySelectorAll<HTMLButtonElement>(".chip-remove")) {
+    chip.addEventListener("click", () => chip.closest(".chip")?.remove());
+  }
+}
+
+function setupComponentInteractions(): void {
+  for (const toggle of document.querySelectorAll<HTMLElement>(".switch")) {
+    const flip = () => {
+      const checked = toggle.getAttribute("aria-checked") !== "true";
+      toggle.setAttribute("aria-checked", String(checked));
+    };
+    toggle.addEventListener("click", flip);
+    toggle.addEventListener("keydown", (event) => {
+      if (event.key === " " || event.key === "Enter") {
+        event.preventDefault();
+        flip();
+      }
+    });
+  }
+  document.querySelector("#toast-trigger")?.addEventListener("click", () => {
+    showToast(t(currentLang, "comp.savedToast"), true);
+  });
+  document.querySelector("#toast-undo")?.addEventListener("click", () => {
+    const toast = document.querySelector<HTMLElement>("#toast");
+    if (toast) toast.dataset.visible = "false";
+  });
+}
+
+function currentSectionIndex(): number {
+  const scroller = document.querySelector<HTMLElement>("#hscroll");
+  if (!scroller) return 0;
+  const sections = [...scroller.querySelectorAll<HTMLElement>("section")];
+  const probe = scroller.scrollLeft + scroller.clientWidth / 2;
+  let index = 0;
+  sections.forEach((section, i) => {
+    if (probe >= section.offsetLeft) index = i;
+  });
+  return index;
+}
+
+function scrollToSection(index: number): void {
+  const scroller = document.querySelector<HTMLElement>("#hscroll");
+  if (!scroller) return;
+  const sections = scroller.querySelectorAll<HTMLElement>("section");
+  const section = sections[index];
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  }
+}
+
+function setupScrollNav(): void {
+  const scroller = document.querySelector<HTMLElement>("#hscroll");
+  if (!scroller) return;
+  const links = [...document.querySelectorAll<HTMLAnchorElement>(".hnav-link")];
+  links.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const target = document.querySelector(link.getAttribute("href") ?? "");
+      target?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    });
+  });
+  const sections = [...scroller.querySelectorAll<HTMLElement>("section")];
+  const highlight = () => {
+    const index = currentSectionIndex();
+    links.forEach((link, i) => link.setAttribute("aria-current", String(i === index)));
+  };
+  scroller.addEventListener("scroll", highlight, { passive: true });
+  highlight();
+  document.querySelector("#nav-prev")?.addEventListener("click", () => {
+    scrollToSection(Math.max(0, currentSectionIndex() - 1));
+  });
+  document.querySelector("#nav-next")?.addEventListener("click", () => {
+    scrollToSection(Math.min(sections.length - 1, currentSectionIndex() + 1));
+  });
+  window.addEventListener("keydown", (event) => {
+    if (event.target instanceof HTMLElement && event.target.matches("input, select, textarea")) {
+      return;
+    }
+    if (event.key === "ArrowLeft") scrollToSection(Math.max(0, currentSectionIndex() - 1));
+    if (event.key === "ArrowRight") {
+      scrollToSection(Math.min(sections.length - 1, currentSectionIndex() + 1));
+    }
+  });
+}
+
 function initTheme(): void {
   const stored = localStorage.getItem("dt-theme");
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -171,12 +343,18 @@ function initControls(): void {
   }
   document.querySelector("#theme-toggle")?.addEventListener("click", () => {
     applyMode(currentMode === "dark" ? "light" : "dark");
+    renderHueStrips();
   });
 }
 
+mountIcons();
 initTheme();
 initLang();
 initControls();
 renderSemanticGrid();
+renderHueStrips();
 renderPaletteTable();
 setupSquircleClip();
+setupCalendarControls();
+setupComponentInteractions();
+setupScrollNav();

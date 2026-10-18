@@ -9,8 +9,8 @@
     "l": { "$type": "dimension", "$value": "12px", "$description": "Popovers, menus" },
     "xl": {
       "$type": "dimension",
-      "$value": "20px",
-      "$description": "Cards, sheets, dialogs; pair with corner-shape: squircle"
+      "$value": "16px",
+      "$description": "Cards, sheets, dialogs; pair with corner-shape: squircle. Matched to the Tetrisly card proportion"
     },
     "full": { "$type": "dimension", "$value": "9999px", "$description": "Circles, pills" }
   }

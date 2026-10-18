@@ -1,0 +1,10 @@
+{
+  "$description": "Semantic radius roles. Controls follow Tetrisly proportions: compact controls at radius-m, containers at radius-xl.",
+  "radius": {
+    "chip": { "$value": "{radius.s}" },
+    "control": { "$value": "{radius.m}" },
+    "overlay": { "$value": "{radius.l}" },
+    "card": { "$value": "{radius.xl}" },
+    "pill": { "$value": "{radius.full}" }
+  }
+}

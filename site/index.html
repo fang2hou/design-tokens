@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Design Tokens</title>
   </head>
-  <body class="min-h-screen antialiased">
+  <body class="antialiased">
     <svg class="absolute h-0 w-0" aria-hidden="true">
       <clipPath id="squircle-clip" clipPathUnits="userSpaceOnUse">
         <path id="squircle-path" d="" />
@@ -13,299 +13,723 @@
     </svg>
 
     <header class="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
-      <div class="mx-auto flex max-w-5xl flex-wrap items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <h1 class="mr-auto text-xl font-heading">Design Tokens</h1>
-        <nav class="flex gap-1 text-sm">
-          <a class="rounded-m px-2 py-1 hover:bg-accent" href="#colors" data-i18n="nav.colors"></a>
-          <a
-            class="rounded-m px-2 py-1 hover:bg-accent"
-            href="#typography"
-            data-i18n="nav.typography"
-          ></a>
-          <a
-            class="rounded-m px-2 py-1 hover:bg-accent"
-            href="#corners"
-            data-i18n="nav.corners"
-          ></a>
-          <a
-            class="rounded-m px-2 py-1 hover:bg-accent"
-            href="#components"
-            data-i18n="nav.components"
-          ></a>
+      <div class="flex h-[3.75rem] items-center gap-3 px-5">
+        <span
+          class="flex h-7 w-7 items-center justify-center rounded-control bg-primary text-sm font-bold text-primary-foreground"
+          >DT</span
+        >
+        <h1 class="mr-2 text-base font-heading">Design Tokens</h1>
+        <nav class="flex gap-1" aria-label="Sections">
+          <a class="hnav-link" href="#cover" data-i18n="nav.cover"></a>
+          <a class="hnav-link" href="#colors" data-i18n="nav.colors"></a>
+          <a class="hnav-link" href="#typography" data-i18n="nav.typography"></a>
+          <a class="hnav-link" href="#corners" data-i18n="nav.corners"></a>
+          <a class="hnav-link" href="#components" data-i18n="nav.components"></a>
         </nav>
-        <div class="flex gap-1" role="group" aria-label="Language">
+        <div class="ml-auto flex gap-1">
           <button
             type="button"
-            class="rounded-m px-2 py-1 text-sm hover:bg-accent"
-            data-lang="zh-CN"
+            id="nav-prev"
+            class="rounded-control border border-border px-2 py-1 hover:bg-accent"
+            aria-label="Previous section"
           >
+            <span class="icon" data-icon="chevron-left"></span>
+          </button>
+          <button
+            type="button"
+            id="nav-next"
+            class="rounded-control border border-border px-2 py-1 hover:bg-accent"
+            aria-label="Next section"
+          >
+            <span class="icon" data-icon="chevron-right"></span>
+          </button>
+        </div>
+        <div class="flex gap-1 text-sm" role="group" aria-label="Language">
+          <button type="button" class="rounded-control px-2 py-1 hover:bg-accent" data-lang="zh-CN">
             中
           </button>
-          <button type="button" class="rounded-m px-2 py-1 text-sm hover:bg-accent" data-lang="ja">
+          <button type="button" class="rounded-control px-2 py-1 hover:bg-accent" data-lang="ja">
             日
           </button>
-          <button type="button" class="rounded-m px-2 py-1 text-sm hover:bg-accent" data-lang="en">
+          <button type="button" class="rounded-control px-2 py-1 hover:bg-accent" data-lang="en">
             EN
           </button>
         </div>
         <button
           type="button"
           id="theme-toggle"
-          class="rounded-m border border-border px-2 py-1 text-sm hover:bg-accent"
+          class="rounded-control border border-border px-2 py-1 hover:bg-accent"
           aria-label=""
           data-i18n-title="theme.toggle"
         >
-          ☾
+          <span class="icon" data-icon="moon"></span>
         </button>
       </div>
     </header>
 
-    <main class="mx-auto max-w-5xl space-y-16 px-4 py-10 sm:px-6 lg:px-8">
-      <p class="text-lg text-muted-foreground" data-i18n="app.subtitle"></p>
-
-      <section id="colors" class="space-y-8">
-        <h2 class="text-2xl font-heading" data-i18n="nav.colors"></h2>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="colors.semantic"></h3>
-          <p class="text-sm text-muted-foreground" data-i18n="colors.semanticHint"></p>
-          <div
-            id="semantic-grid"
-            class="grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-3"
-          ></div>
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="colors.palette"></h3>
-          <div class="overflow-x-auto">
-            <table id="palette-table" class="w-full text-sm"></table>
+    <main id="hscroll" class="hscroll">
+      <section id="cover">
+        <div class="section-inner justify-center gap-10">
+          <div class="space-y-5">
+            <h2 class="text-6xl font-heading font-semibold tracking-tight">Design Tokens</h2>
+            <p class="text-xl text-muted-foreground" data-i18n="app.subtitle"></p>
+            <p class="text-sm text-muted-foreground" data-i18n="cover.meta"></p>
+            <p class="text-sm text-muted-foreground" data-i18n="cover.radiusNote"></p>
           </div>
-        </div>
-      </section>
-
-      <section id="typography" class="space-y-8">
-        <h2 class="text-2xl font-heading" data-i18n="nav.typography"></h2>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="typo.families"></h3>
-          <div class="space-y-3 rounded-l border border-border bg-card p-4">
-            <p style="font-family: var(--font-sans-latin)">
-              <span class="text-muted-foreground">sans-latin</span> — The quick brown fox jumps over
-              the lazy dog
-            </p>
-            <p style="font-family: var(--font-sans-sc)">
-              <span class="text-muted-foreground">sans-sc</span> — 敏捷的棕色狐狸跳过了懒惰的狗
-            </p>
-            <p style="font-family: var(--font-sans-jp)">
-              <span class="text-muted-foreground">sans-jp</span> —
-              素早い茶色のキツネは怠け者の犬を飛び越える
-            </p>
-            <p style="font-family: var(--font-serif-latin)">
-              <span class="text-muted-foreground">serif-latin</span> — The quick brown fox jumps
-              over the lazy dog
-            </p>
-            <p style="font-family: var(--font-serif-sc)">
-              <span class="text-muted-foreground">serif-sc</span> — 敏捷的棕色狐狸跳过了懒惰的狗
-            </p>
-            <p style="font-family: var(--font-serif-jp)">
-              <span class="text-muted-foreground">serif-jp</span> —
-              素早い茶色のキツネは怠け者の犬を飛び越える
-            </p>
-            <p style="font-family: var(--font-mono)">
-              <span class="text-muted-foreground">mono</span> — const fox = await jump("lazy-dog");
-            </p>
-          </div>
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="typo.scale"></h3>
-          <div class="space-y-1">
-            <p class="text-xs">text-xs — The quick brown fox 敏捷的棕色狐狸</p>
-            <p class="text-sm">text-sm — The quick brown fox 敏捷的棕色狐狸</p>
-            <p class="text-base">text-base — The quick brown fox 敏捷的棕色狐狸</p>
-            <p class="text-lg">text-lg — The quick brown fox 敏捷的棕色狐狸</p>
-            <p class="text-xl">text-xl — The quick brown fox</p>
-            <p class="text-2xl">text-2xl — The quick brown fox</p>
-            <p class="text-4xl">text-4xl — The quick fox</p>
-          </div>
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="typo.reading"></h3>
-          <p class="text-sm text-muted-foreground" data-i18n="typo.readingHint"></p>
-          <article class="reading-article">
-            <p lang="zh-CN">
-              燕子去了，有再来的时候；杨柳枯了，有再青的时候；桃花谢了，有再开的时候。但是，聪明的，你告诉我，我们的日子为什么一去不复返呢？
-            </p>
-            <p lang="ja">
-              雪が、つもりました。かじかも、さむがって、ぴいぴいなきました。こんな夜は、きつねが、子ぎつねを、つれて、村へきて、あひるをぬすんだり、にわとりをぬすんだりするそうです。
-            </p>
-            <p lang="en">
-              It is a truth universally acknowledged, that a single man in possession of a good
-              fortune, must be in want of a wife. However little known the feelings or views of such
-              a man may be on his first entering a neighbourhood, this truth is so well fixed in the
-              minds of the surrounding families, that he is considered as the rightful property of
-              some one or other of their daughters.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section id="corners" class="space-y-8">
-        <h2 class="text-2xl font-heading" data-i18n="nav.corners"></h2>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="corner.scale"></h3>
-          <div class="flex flex-wrap gap-4">
-            <figure class="space-y-1 text-center">
-              <div
-                class="corner-demo corner-round bg-muted"
-                style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-s)"
-              ></div>
-              <figcaption><code class="text-xs">radius-s 6px</code></figcaption>
-            </figure>
-            <figure class="space-y-1 text-center">
-              <div
-                class="corner-demo corner-round bg-muted"
-                style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-m)"
-              ></div>
-              <figcaption><code class="text-xs">radius-m 8px</code></figcaption>
-            </figure>
-            <figure class="space-y-1 text-center">
-              <div
-                class="corner-demo corner-round bg-muted"
-                style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-l)"
-              ></div>
-              <figcaption><code class="text-xs">radius-l 12px</code></figcaption>
-            </figure>
-            <figure class="space-y-1 text-center">
-              <div
-                class="corner-demo corner-round bg-muted"
-                style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-xl)"
-              ></div>
-              <figcaption><code class="text-xs">radius-xl 20px</code></figcaption>
-            </figure>
-            <figure class="space-y-1 text-center">
-              <div
-                class="bg-muted"
-                style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-full)"
-              ></div>
-              <figcaption><code class="text-xs">radius-full</code></figcaption>
-            </figure>
-          </div>
-        </div>
-        <div class="space-y-3">
-          <h3 class="text-lg font-heading" data-i18n="corner.shapes"></h3>
-          <div class="flex flex-wrap gap-6">
-            <figure class="space-y-2">
-              <div class="corner-demo corner-round"></div>
-              <figcaption class="text-sm" data-i18n="corner.round"></figcaption>
-            </figure>
-            <figure class="space-y-2">
-              <div class="corner-demo corner-squircle"></div>
-              <figcaption class="text-sm" data-i18n="corner.squircle"></figcaption>
-            </figure>
-            <figure class="space-y-2">
-              <div class="corner-demo corner-soft"></div>
-              <figcaption class="text-sm" data-i18n="corner.soft"></figcaption>
-            </figure>
-            <figure class="space-y-2">
-              <div class="corner-demo corner-boxy"></div>
-              <figcaption class="text-sm" data-i18n="corner.boxy"></figcaption>
-            </figure>
-            <figure class="space-y-2">
-              <div class="corner-demo corner-svg"></div>
-              <figcaption class="text-sm" data-i18n="corner.svgClip"></figcaption>
-            </figure>
-          </div>
-          <p class="text-sm text-muted-foreground" data-i18n="corner.support"></p>
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="corner.nested"></h3>
-          <div class="nested-card" style="inline-size: 16rem">
-            <div class="nested-inner">
-              <code class="text-sm">radius-xl − 12px</code>
+          <div class="space-y-3">
+            <div id="cover-strip" class="hue-strip"></div>
+            <div class="flex items-center justify-between">
+              <code class="text-xs text-muted-foreground">gruvbox-material · mix · hard</code>
+              <span class="text-sm text-muted-foreground" data-i18n="app.hint"></span>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section id="components" class="space-y-8">
-        <h2 class="text-2xl font-heading" data-i18n="comp.title"></h2>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="comp.button"></h3>
-          <div class="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              class="rounded-m bg-primary px-4 py-2 font-heading text-primary-foreground"
-            >
-              <span data-i18n="comp.button"></span> primary
-            </button>
-            <button
-              type="button"
-              class="rounded-m bg-secondary px-4 py-2 font-heading text-secondary-foreground"
-            >
-              secondary
-            </button>
-            <button
-              type="button"
-              class="rounded-m bg-destructive px-4 py-2 font-heading text-destructive-foreground"
-            >
-              destructive
-            </button>
-            <button
-              type="button"
-              class="rounded-m border border-border bg-transparent px-4 py-2 font-heading hover:bg-accent"
-            >
-              outline
-            </button>
-            <button
-              type="button"
-              class="rounded-m bg-warning px-4 py-2 font-heading text-warning-foreground"
-            >
-              warning
-            </button>
-          </div>
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="comp.badge"></h3>
           <div class="flex flex-wrap gap-2 text-sm">
-            <span class="rounded-full bg-success px-3 py-1 text-success-foreground">success</span>
-            <span class="rounded-full bg-info px-3 py-1 text-info-foreground">info</span>
-            <span class="rounded-full bg-muted px-3 py-1 text-muted-foreground">muted</span>
-            <span class="rounded-full border border-border px-3 py-1">outline</span>
+            <span class="chip">DTCG TR/2025.10</span>
+            <span class="chip">Style Dictionary</span>
+            <span class="chip">Tailwind v4</span>
+            <span class="chip">Lucide</span>
+            <span class="chip">zh · ja · en</span>
           </div>
         </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="comp.input"></h3>
-          <input
-            type="text"
-            class="w-full max-w-sm rounded-m border border-input bg-background px-3 py-2 outline-none focus:ring-2 focus:ring-ring"
-            placeholder="focus → ring"
-          />
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-lg font-heading" data-i18n="comp.card"></h3>
-          <div class="nested-card" style="inline-size: min(100%, 22rem)">
-            <div class="nested-inner space-y-2 p-4 text-start">
-              <h4 class="font-heading">Card</h4>
-              <p class="text-sm" data-i18n="comp.cardBody"></p>
+      </section>
+
+      <section id="colors">
+        <div class="section-inner">
+          <h2 class="text-3xl font-heading" data-i18n="nav.colors"></h2>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="colors.semantic"></h3>
+            <p class="text-sm text-muted-foreground" data-i18n="colors.semanticHint"></p>
+            <div
+              id="semantic-grid"
+              class="grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-3"
+            ></div>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="colors.hueStrips"></h3>
+            <div class="space-y-3">
+              <div id="hue-strip-light" class="hue-strip"></div>
+              <div id="hue-strip-dark" class="hue-strip"></div>
             </div>
           </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="colors.palette"></h3>
+            <div class="overflow-x-auto">
+              <table id="palette-table" class="w-full text-sm"></table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="typography">
+        <div class="section-inner">
+          <h2 class="text-3xl font-heading" data-i18n="nav.typography"></h2>
+          <div class="flex items-center gap-8 rounded-card border border-border bg-card p-8">
+            <span class="aa-hero text-[7rem] text-foreground">Aa</span>
+            <span class="aa-hero text-[4rem] text-muted-foreground">Aa</span>
+            <p class="text-sm text-muted-foreground" data-i18n="typo.aaNote"></p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="typo.families"></h3>
+            <div class="space-y-3 rounded-card border border-border bg-card p-4">
+              <p style="font-family: var(--font-sans-latin)">
+                <span class="text-muted-foreground">sans-latin</span> — The quick brown fox jumps
+                over the lazy dog
+              </p>
+              <p style="font-family: var(--font-sans-sc)">
+                <span class="text-muted-foreground">sans-sc</span> — 敏捷的棕色狐狸跳过了懒惰的狗
+              </p>
+              <p style="font-family: var(--font-sans-jp)">
+                <span class="text-muted-foreground">sans-jp</span> —
+                素早い茶色のキツネは怠け者の犬を飛び越える
+              </p>
+              <p style="font-family: var(--font-serif-latin)">
+                <span class="text-muted-foreground">serif-latin</span> — The quick brown fox jumps
+                over the lazy dog
+              </p>
+              <p style="font-family: var(--font-serif-sc)">
+                <span class="text-muted-foreground">serif-sc</span> — 敏捷的棕色狐狸跳过了懒惰的狗
+              </p>
+              <p style="font-family: var(--font-serif-jp)">
+                <span class="text-muted-foreground">serif-jp</span> —
+                素早い茶色のキツネは怠け者の犬を飛び越える
+              </p>
+              <p style="font-family: var(--font-mono)">
+                <span class="text-muted-foreground">mono</span> — const fox = await
+                jump("lazy-dog");
+              </p>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="typo.scale"></h3>
+            <div class="space-y-1">
+              <p class="text-xs">text-xs — The quick brown fox 敏捷的棕色狐狸</p>
+              <p class="text-sm">text-sm — The quick brown fox 敏捷的棕色狐狸</p>
+              <p class="text-base">text-base — The quick brown fox 敏捷的棕色狐狸</p>
+              <p class="text-lg">text-lg — The quick brown fox 敏捷的棕色狐狸</p>
+              <p class="text-xl">text-xl — The quick brown fox</p>
+              <p class="text-2xl">text-2xl — The quick brown fox</p>
+              <p class="text-4xl">text-4xl — The quick fox</p>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="typo.reading"></h3>
+            <p class="text-sm text-muted-foreground" data-i18n="typo.readingHint"></p>
+            <article class="reading-article">
+              <p lang="zh-CN">
+                燕子去了，有再来的时候；杨柳枯了，有再青的时候；桃花谢了，有再开的时候。但是，聪明的，你告诉我，我们的日子为什么一去不复返呢？
+              </p>
+              <p lang="ja">
+                雪が、つもりました。かじかも、さむがって、ぴいぴいなきました。こんな夜は、きつねが、子ぎつねを、つれて、村へきて、あひるをぬすんだり、にわとりをぬすんだりするそうです。
+              </p>
+              <p lang="en">
+                It is a truth universally acknowledged, that a single man in possession of a good
+                fortune, must be in want of a wife. However little known the feelings or views of
+                such a man may be on his first entering a neighbourhood, this truth is so well fixed
+                in the minds of the surrounding families, that he is considered as the rightful
+                property of some one or other of their daughters.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="corners">
+        <div class="section-inner">
+          <h2 class="text-3xl font-heading" data-i18n="nav.corners"></h2>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="corner.scale"></h3>
+            <div class="flex flex-wrap gap-4">
+              <figure class="space-y-1 text-center">
+                <div
+                  class="corner-demo corner-round bg-muted"
+                  style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-s)"
+                ></div>
+                <figcaption><code class="text-xs">radius-s 6px</code></figcaption>
+              </figure>
+              <figure class="space-y-1 text-center">
+                <div
+                  class="corner-demo corner-round bg-muted"
+                  style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-m)"
+                ></div>
+                <figcaption><code class="text-xs">radius-m 8px</code></figcaption>
+              </figure>
+              <figure class="space-y-1 text-center">
+                <div
+                  class="corner-demo corner-round bg-muted"
+                  style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-l)"
+                ></div>
+                <figcaption><code class="text-xs">radius-l 12px</code></figcaption>
+              </figure>
+              <figure class="space-y-1 text-center">
+                <div
+                  class="corner-demo corner-round bg-muted"
+                  style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-xl)"
+                ></div>
+                <figcaption><code class="text-xs">radius-xl 16px</code></figcaption>
+              </figure>
+              <figure class="space-y-1 text-center">
+                <div
+                  class="bg-muted"
+                  style="inline-size: 4.5rem; block-size: 4.5rem; border-radius: var(--radius-full)"
+                ></div>
+                <figcaption><code class="text-xs">radius-full</code></figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <h3 class="text-lg font-heading" data-i18n="corner.shapes"></h3>
+            <div class="flex flex-wrap gap-6">
+              <figure class="space-y-2">
+                <div class="corner-demo corner-round"></div>
+                <figcaption class="text-sm" data-i18n="corner.round"></figcaption>
+              </figure>
+              <figure class="space-y-2">
+                <div class="corner-demo corner-squircle"></div>
+                <figcaption class="text-sm" data-i18n="corner.squircle"></figcaption>
+              </figure>
+              <figure class="space-y-2">
+                <div class="corner-demo corner-soft"></div>
+                <figcaption class="text-sm" data-i18n="corner.soft"></figcaption>
+              </figure>
+              <figure class="space-y-2">
+                <div class="corner-demo corner-boxy"></div>
+                <figcaption class="text-sm" data-i18n="corner.boxy"></figcaption>
+              </figure>
+              <figure class="space-y-2">
+                <div class="corner-demo corner-svg"></div>
+                <figcaption class="text-sm" data-i18n="corner.svgClip"></figcaption>
+              </figure>
+            </div>
+            <p class="text-sm text-muted-foreground" data-i18n="corner.support"></p>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="corner.nested"></h3>
+            <div class="nested-card" style="inline-size: 16rem">
+              <div class="nested-inner">
+                <code class="text-sm">radius-xl − 12px</code>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="elev.scale"></h3>
+            <div class="flex flex-wrap gap-4">
+              <figure class="space-y-1 text-center">
+                <div class="shadow-demo" style="box-shadow: var(--shadow-subtle)">
+                  <code class="text-xs">subtle</code>
+                </div>
+                <figcaption><code class="text-xs">shadow-subtle</code></figcaption>
+              </figure>
+              <figure class="space-y-1 text-center">
+                <div class="shadow-demo" style="box-shadow: var(--shadow-card)">
+                  <code class="text-xs">card</code>
+                </div>
+                <figcaption><code class="text-xs">shadow-card</code></figcaption>
+              </figure>
+              <figure class="space-y-1 text-center">
+                <div class="shadow-demo" style="box-shadow: var(--shadow-overlay)">
+                  <code class="text-xs">overlay</code>
+                </div>
+                <figcaption><code class="text-xs">shadow-overlay</code></figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-lg font-heading" data-i18n="elev.roles"></h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-left text-muted-foreground">
+                    <th class="font-weight-body py-2 pr-4">token</th>
+                    <th class="py-2 pr-4">primitive</th>
+                    <th class="py-2">usage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--radius-chip</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">radius-s 6px</code></td>
+                    <td class="py-1">chips · menu rows · checkboxes</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--radius-control</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">radius-m 8px</code></td>
+                    <td class="py-1">buttons · inputs · banner</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--radius-overlay</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">radius-l 12px</code></td>
+                    <td class="py-1">menus · popovers · calendar</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--radius-card</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">radius-xl 16px</code></td>
+                    <td class="py-1">cards · dialogs · specimens</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--radius-pill</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">radius-full</code></td>
+                    <td class="py-1">badges · avatars · switches</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--shadow-subtle</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">shadow-{m}.sm</code></td>
+                    <td class="py-1">resting chips · switch thumb</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--shadow-card</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">shadow-{m}.md</code></td>
+                    <td class="py-1">cards · dropdowns</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1 pr-4"><code class="text-xs">--shadow-overlay</code></td>
+                    <td class="py-1 pr-4"><code class="text-xs">shadow-{m}.lg</code></td>
+                    <td class="py-1">modals · calendar popover</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="components" class="wide">
+        <div class="section-inner">
+          <h2 class="text-3xl font-heading" data-i18n="comp.title"></h2>
+          <div class="grid auto-rows-min grid-cols-[repeat(auto-fill,21rem)] justify-center gap-5">
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.buttons"></span>
+              <div class="specimen-row">
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-secondary">Secondary</button>
+                <button type="button" class="btn btn-outline">Outline</button>
+                <button type="button" class="btn btn-ghost">Ghost</button>
+                <button type="button" class="btn btn-destructive">Destructive</button>
+                <button type="button" class="btn btn-warning">Warning</button>
+                <button type="button" class="btn btn-primary" disabled>Disabled</button>
+                <button type="button" class="btn btn-primary">
+                  <span class="spinner"></span>
+                  <span data-i18n="comp.loading"></span>
+                </button>
+                <button type="button" class="btn btn-outline">
+                  <span class="icon" data-icon="plus"></span>
+                  Icon
+                </button>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.iconButtons"></span>
+              <div class="specimen-row">
+                <button type="button" class="btn btn-primary btn-icon" aria-label="add">
+                  <span class="icon" data-icon="plus"></span>
+                </button>
+                <button type="button" class="btn btn-info btn-icon" aria-label="bell">
+                  <span class="icon" data-icon="bell"></span>
+                </button>
+                <button type="button" class="btn btn-outline btn-icon" aria-label="more options">
+                  <span class="icon" data-icon="more-horizontal"></span>
+                </button>
+                <button type="button" class="btn btn-ghost btn-icon" aria-label="settings">
+                  <span class="icon" data-icon="settings"></span>
+                </button>
+                <button type="button" class="btn btn-ghost btn-icon" aria-label="trash">
+                  <span class="icon" data-icon="trash-2"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.inputs"></span>
+              <div class="flex w-full flex-col gap-3">
+                <div class="relative">
+                  <span class="icon input-icon" data-icon="search"></span>
+                  <input
+                    type="search"
+                    class="field ps-9"
+                    placeholder=""
+                    data-i18n-placeholder="comp.search"
+                  />
+                </div>
+                <input
+                  type="text"
+                  class="field"
+                  placeholder=""
+                  data-i18n-placeholder="comp.companyName"
+                />
+                <div class="relative">
+                  <select class="field appearance-none pe-9">
+                    <option data-i18n="comp.selectOption"></option>
+                  </select>
+                  <span
+                    class="icon input-icon"
+                    data-icon="chevron-down"
+                    style="inset-inline-start: auto; inset-inline-end: 0.625rem; translate: 0"
+                  ></span>
+                </div>
+                <input type="text" class="field" value="Read only" readonly />
+                <input type="text" class="field" value="Disabled" disabled />
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.form"></span>
+              <div class="flex w-full flex-col gap-3 text-sm">
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" class="checkbox-input sr-only" checked />
+                  <span class="check"><span class="icon" data-icon="check"></span></span>
+                  <span data-i18n="comp.checkboxLabel"></span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input type="radio" name="demo-radio" class="radio-input sr-only" />
+                  <span class="radio"></span>
+                  <span data-i18n="comp.radioOption"></span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input type="radio" name="demo-radio" class="radio-input sr-only" checked />
+                  <span class="radio"></span>
+                  <span data-i18n="comp.radioOption"></span> 2
+                </label>
+                <div class="flex items-center justify-between">
+                  <span data-i18n="comp.progress"></span>
+                  <code class="text-xs">68%</code>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" style="inline-size: 68%"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span>Switch</span>
+                  <div class="switch" role="switch" aria-checked="true" tabindex="0"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.badgesChips"></span>
+              <div class="specimen-row">
+                <span
+                  class="badge-dot bg-warning text-warning-foreground"
+                  data-i18n="comp.new"
+                ></span>
+                <span class="badge-dot bg-info text-info-foreground" data-i18n="comp.live"></span>
+                <span
+                  class="badge-dot bg-chart-4 text-info-foreground"
+                  data-i18n="comp.beta"
+                ></span>
+                <span class="badge-dot bg-muted text-muted-foreground">Muted</span>
+              </div>
+              <div class="specimen-row">
+                <span class="chip"
+                  ><span data-i18n="comp.designSystem"></span>
+                  <button type="button" class="chip-remove" aria-label="remove">
+                    <span class="icon" data-icon="x"></span>
+                  </button>
+                </span>
+                <span class="chip"
+                  >UI
+                  <button type="button" class="chip-remove" aria-label="remove">
+                    <span class="icon" data-icon="x"></span>
+                  </button>
+                </span>
+                <span class="chip"
+                  ><span class="icon" data-icon="paperclip"></span> attachment.pdf
+                </span>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.avatars"></span>
+              <div class="specimen-row">
+                <span class="avatar" style="background-color: var(--chart-1)">AJ</span>
+                <span class="avatar" style="background-color: var(--chart-3)">MK</span>
+                <span class="avatar" style="background-color: var(--chart-5)">SL</span>
+                <span class="avatar" style="background-color: var(--chart-2)">ZF</span>
+              </div>
+              <div class="specimen-row">
+                <span class="avatar-stack">
+                  <span class="avatar" style="background-color: var(--chart-1)">A</span>
+                  <span class="avatar" style="background-color: var(--chart-3)">P</span>
+                  <span class="avatar" style="background-color: var(--chart-2)">T</span>
+                  <span class="avatar" style="background-color: var(--chart-4)">D</span>
+                  <span class="avatar" style="background-color: var(--muted)">+4</span>
+                </span>
+                <span class="avatar" style="background-color: var(--primary)">DT</span>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.card"></span>
+              <div
+                class="nested-card"
+                style="box-shadow: none; border-radius: var(--radius-overlay)"
+              >
+                <svg class="cover-art" viewBox="0 0 420 180" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="cover-grad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#83a598" />
+                      <stop offset="45%" stop-color="#d3869b" />
+                      <stop offset="100%" stop-color="#8f3f71" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="420" height="180" fill="url(#cover-grad)" />
+                  <circle cx="330" cy="40" r="70" fill="#fabd2f" opacity="0.35" />
+                  <circle cx="90" cy="150" r="90" fill="#8ec07c" opacity="0.3" />
+                </svg>
+                <div class="space-y-1 p-3">
+                  <h4 class="font-heading" data-i18n="comp.projectOverview"></h4>
+                  <p class="text-sm text-muted-foreground" data-i18n="comp.cardSummary"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.metric"></span>
+              <div class="metric-card">
+                <div class="flex items-start justify-between">
+                  <span class="text-sm text-muted-foreground" data-i18n="comp.activeUsers"></span>
+                  <span class="trend"
+                    ><span class="icon" data-icon="trending-up"></span>+12.4%</span
+                  >
+                </div>
+                <span class="metric-value">12.4k</span>
+                <svg viewBox="0 0 260 64" class="w-full">
+                  <polyline
+                    points="0,52 30,46 60,50 90,38 120,42 150,30 180,34 210,22 240,26 260,14"
+                    fill="none"
+                    stroke="var(--chart-1)"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.banner"></span>
+              <div class="banner">
+                <span class="icon" data-icon="circle-check"></span>
+                <span data-i18n="comp.successMessage"></span>
+                <button type="button" class="ml-auto underline underline-offset-2">
+                  <span data-i18n="comp.actionHere"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.toast"></span>
+              <button type="button" class="btn btn-primary self-start" id="toast-trigger">
+                <span class="icon" data-icon="bell"></span>
+                <span data-i18n="comp.triggerToast"></span>
+              </button>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.breadcrumbs"></span>
+              <nav class="text-sm" aria-label="breadcrumb">
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="icon text-muted-foreground" data-icon="house"></span>
+                  <span class="text-muted-foreground">Home</span>
+                  <span class="crumb-sep">/</span>
+                  <span class="font-medium">Design Tokens</span>
+                </span>
+              </nav>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.datepicker"></span>
+              <div class="calendar" id="calendar">
+                <div class="calendar-quick">
+                  <button type="button" data-i18n="comp.today"></button>
+                  <button type="button" data-i18n="comp.tomorrow"></button>
+                  <button type="button" class="more">
+                    <span data-i18n="comp.more"></span>
+                    <span class="icon" data-icon="chevron-down"></span>
+                  </button>
+                </div>
+                <div class="calendar-head">
+                  <button type="button" aria-label="previous month">
+                    <span class="icon" data-icon="chevron-left"></span>
+                  </button>
+                  <span id="calendar-title" class="flex-1 text-center font-heading"></span>
+                  <button type="button" aria-label="next month">
+                    <span class="icon" data-icon="chevron-right"></span>
+                  </button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+                <div class="flex justify-end gap-2">
+                  <button type="button" class="btn btn-outline" data-i18n="comp.cancel"></button>
+                  <button type="button" class="btn btn-primary" data-i18n="comp.done"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="specimen">
+              <span class="specimen-label" data-i18n="comp.dropdown"></span>
+              <div class="menu">
+                <button type="button" class="menu-item">
+                  <span class="icon" data-icon="bar-chart-3"></span> Dashboard
+                </button>
+                <button type="button" class="menu-item">
+                  <span class="icon" data-icon="message-square"></span> Messages
+                </button>
+                <button type="button" class="menu-item">
+                  <span class="icon" data-icon="puzzle"></span> Integrations
+                </button>
+                <button type="button" class="menu-item">
+                  <span class="icon" data-icon="settings"></span> Settings
+                </button>
+                <div class="menu-sep"></div>
+                <span class="menu-heading" data-i18n="comp.support"></span>
+                <button type="button" class="menu-item">
+                  <span class="icon" data-icon="book-open"></span> Guide
+                </button>
+                <button type="button" class="menu-item">
+                  <span class="icon" data-icon="life-buoy"></span> Help Center
+                </button>
+                <div class="menu-sep"></div>
+                <button type="button" class="menu-item" style="color: var(--destructive)">
+                  <span class="icon" data-icon="log-out"></span>
+                  <span data-i18n="comp.logout"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="specimen" style="inline-size: 27rem">
+              <span class="specimen-label" data-i18n="comp.settings"></span>
+              <div class="flex w-full flex-col gap-4">
+                <label class="flex w-full flex-col gap-1.5 text-sm">
+                  <span data-i18n="comp.fullName"></span>
+                  <input type="text" class="field" value="Adam Doe" />
+                </label>
+                <div class="flex flex-col gap-1.5 text-sm">
+                  <span data-i18n="comp.tags"></span>
+                  <div
+                    class="flex flex-wrap gap-2 rounded-control border border-input bg-background p-2"
+                  >
+                    <span class="chip"
+                      ><span data-i18n="comp.designSystem"></span>
+                      <button type="button" class="chip-remove" aria-label="remove">
+                        <span class="icon" data-icon="x"></span>
+                      </button>
+                    </span>
+                    <span class="chip"
+                      >UI
+                      <button type="button" class="chip-remove" aria-label="remove">
+                        <span class="icon" data-icon="x"></span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-1.5 text-sm">
+                  <span data-i18n="comp.resume"></span>
+                  <div class="file-card">
+                    <span class="file-badge">PDF</span>
+                    <span class="flex flex-col">
+                      <span>cv-final.pdf</span>
+                      <code class="text-xs text-muted-foreground">1.2 MB</code>
+                    </span>
+                    <span class="ml-auto flex items-center gap-2">
+                      <button
+                        type="button"
+                        class="text-sm font-medium"
+                        style="color: var(--primary)"
+                        data-i18n="comp.replace"
+                      ></button>
+                      <button type="button" class="chip-remove" aria-label="remove">
+                        <span class="icon" data-icon="x"></span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div class="flex justify-end gap-2">
+                  <button type="button" class="btn btn-outline" data-i18n="comp.cancel"></button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-i18n="comp.saveChanges"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="space-y-1 pt-4 text-sm text-muted-foreground">
+            <p data-i18n="footer.sources"></p>
+            <p>
+              <a
+                class="underline hover:text-foreground"
+                href="https://github.com/fang2hou/design-tokens"
+                >github.com/fang2hou/design-tokens</a
+              >
+            </p>
+          </footer>
         </div>
       </section>
     </main>
 
-    <footer class="border-t border-border">
-      <div
-        class="mx-auto max-w-5xl space-y-1 px-4 py-6 text-sm text-muted-foreground sm:px-6 lg:px-8"
-      >
-        <p data-i18n="footer.sources"></p>
-        <p>
-          <a
-            class="underline hover:text-foreground"
-            href="https://github.com/fang2hou/design-tokens"
-            >github.com/fang2hou/design-tokens</a
-          >
-        </p>
-      </div>
-    </footer>
-
-    <div id="toast" class="toast" data-visible="false"></div>
+    <div id="toast" class="toast" role="status">
+      <span data-i18n="comp.savedToast"></span>
+      <button type="button" id="toast-undo" data-i18n="comp.undo"></button>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

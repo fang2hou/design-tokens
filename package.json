@@ -1,0 +1,40 @@
+{
+  "name": "design-tokens",
+  "version": "0.1.0",
+  "description": "Personal design token system: DTCG sources compiled to CSS variables and a Tailwind v4 theme, with a trilingual preview site.",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./css": "./dist/tokens.css",
+    "./tailwind": "./dist/tailwind.css",
+    "./flat.json": "./dist/tokens.flat.json"
+  },
+  "scripts": {
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "dev": "pnpm build:tokens && vite",
+    "build": "pnpm build:tokens && vite build",
+    "lint": "oxlint",
+    "format": "oxfmt --write --ignore-path .oxfmtignore .",
+    "format:check": "oxfmt --check --ignore-path .oxfmtignore .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/ibm-plex-sans-jp": "^5.3.1",
+    "@fontsource/noto-serif-jp": "^5.3.1",
+    "@fontsource/noto-serif-sc": "^5.3.1",
+    "@fontsource/source-serif-4": "^5.3.1",
+    "@ibm/plex-sans-sc": "^1.1.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "oxlint-tailwindcss": "^1.16.0",
+    "oxlint-tsgolint": "^7.0.2004",
+    "style-dictionary": "^5.7.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}

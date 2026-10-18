@@ -1,0 +1,17 @@
+{
+  "radius": {
+    "s": { "$type": "dimension", "$value": "6px", "$description": "Dense rows, chips" },
+    "m": {
+      "$type": "dimension",
+      "$value": "8px",
+      "$description": "Buttons, inputs, the default control radius"
+    },
+    "l": { "$type": "dimension", "$value": "12px", "$description": "Popovers, menus" },
+    "xl": {
+      "$type": "dimension",
+      "$value": "20px",
+      "$description": "Cards, sheets, dialogs; pair with corner-shape: squircle"
+    },
+    "full": { "$type": "dimension", "$value": "9999px", "$description": "Circles, pills" }
+  }
+}

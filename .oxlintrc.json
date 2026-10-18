@@ -1,0 +1,11 @@
+{
+  "jsPlugins": ["oxlint-tailwindcss"],
+  "settings": {
+    "tailwindcss": {
+      "entryPoint": "site/src/styles/main.css"
+    }
+  },
+  "rules": {
+    "tailwindcss/enforce-sort-order": "warn"
+  }
+}

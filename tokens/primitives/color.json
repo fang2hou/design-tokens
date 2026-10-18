@@ -1,0 +1,57 @@
+{
+  "palette": {
+    "$description": "Gruvbox Material, mix foreground / hard background, light bg0 whitened. Source: sainnhe/gruvbox-material autoload/gruvbox_material.vim (MIT), accessed 2026-10-18.",
+    "light": {
+      "bg0": {
+        "$type": "color",
+        "$value": "#fcf8e9",
+        "$description": "Page base. Original gruvbox-material hard light bg0 #f9f5d7, lightened toward white keeping the warm hue."
+      },
+      "bg-dim": { "$type": "color", "$value": "#f3eac7" },
+      "bg1": { "$type": "color", "$value": "#f5edca" },
+      "bg2": { "$type": "color", "$value": "#f3eac7" },
+      "bg3": { "$type": "color", "$value": "#f2e5bc" },
+      "bg4": { "$type": "color", "$value": "#eee0b7" },
+      "bg5": { "$type": "color", "$value": "#ebdbb2" },
+      "fg0": { "$type": "color", "$value": "#514036" },
+      "fg1": { "$type": "color", "$value": "#514036" },
+      "red": { "$type": "color", "$value": "#af2528" },
+      "orange": { "$type": "color", "$value": "#b94c07" },
+      "yellow": { "$type": "color", "$value": "#b4730e" },
+      "green": { "$type": "color", "$value": "#72761e" },
+      "aqua": { "$type": "color", "$value": "#477a5b" },
+      "blue": { "$type": "color", "$value": "#266b79" },
+      "purple": { "$type": "color", "$value": "#924f79" },
+      "bg-red": { "$type": "color", "$value": "#ae5858" },
+      "bg-green": { "$type": "color", "$value": "#6f8352" },
+      "bg-yellow": { "$type": "color", "$value": "#a96b2c" },
+      "grey0": { "$type": "color", "$value": "#a89984" },
+      "grey1": { "$type": "color", "$value": "#928374" },
+      "grey2": { "$type": "color", "$value": "#7c6f64" }
+    },
+    "dark": {
+      "bg0": { "$type": "color", "$value": "#1d2021" },
+      "bg-dim": { "$type": "color", "$value": "#141617" },
+      "bg1": { "$type": "color", "$value": "#282828" },
+      "bg2": { "$type": "color", "$value": "#282828" },
+      "bg3": { "$type": "color", "$value": "#3c3836" },
+      "bg4": { "$type": "color", "$value": "#3c3836" },
+      "bg5": { "$type": "color", "$value": "#504945" },
+      "fg0": { "$type": "color", "$value": "#e2cca9" },
+      "fg1": { "$type": "color", "$value": "#e2cca9" },
+      "red": { "$type": "color", "$value": "#f2594b" },
+      "orange": { "$type": "color", "$value": "#f28534" },
+      "yellow": { "$type": "color", "$value": "#e9b143" },
+      "green": { "$type": "color", "$value": "#b0b846" },
+      "aqua": { "$type": "color", "$value": "#8bba7f" },
+      "blue": { "$type": "color", "$value": "#80aa9e" },
+      "purple": { "$type": "color", "$value": "#d3869b" },
+      "bg-red": { "$type": "color", "$value": "#db4740" },
+      "bg-green": { "$type": "color", "$value": "#b0b846" },
+      "bg-yellow": { "$type": "color", "$value": "#e9b143" },
+      "grey0": { "$type": "color", "$value": "#7c6f64" },
+      "grey1": { "$type": "color", "$value": "#928374" },
+      "grey2": { "$type": "color", "$value": "#a89984" }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "spacing": {
+    "unit": {
+      "$type": "dimension",
+      "$value": "0.25rem",
+      "$description": "Base unit; Tailwind v4 derives the whole spacing scale from it"
+    }
+  }
+}

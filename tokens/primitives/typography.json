@@ -1,0 +1,85 @@
+{
+  "font": {
+    "sans": {
+      "latin": { "$type": "fontFamily", "$value": ["IBM Plex Sans", "system-ui", "sans-serif"] },
+      "sc": {
+        "$type": "fontFamily",
+        "$value": [
+          "IBM Plex Sans SC",
+          "IBM Plex Sans",
+          "PingFang SC",
+          "Hiragino Sans",
+          "Noto Sans CJK SC",
+          "sans-serif"
+        ]
+      },
+      "jp": {
+        "$type": "fontFamily",
+        "$value": [
+          "IBM Plex Sans JP",
+          "IBM Plex Sans",
+          "Hiragino Sans",
+          "Yu Gothic UI",
+          "Noto Sans CJK JP",
+          "sans-serif"
+        ]
+      }
+    },
+    "serif": {
+      "latin": { "$type": "fontFamily", "$value": ["Source Serif 4", "Georgia", "serif"] },
+      "sc": {
+        "$type": "fontFamily",
+        "$value": ["Noto Serif SC", "Source Serif 4", "Songti SC", "SimSun", "serif"]
+      },
+      "jp": {
+        "$type": "fontFamily",
+        "$value": ["Noto Serif JP", "Source Serif 4", "Yu Mincho", "serif"]
+      }
+    },
+    "mono": {
+      "$type": "fontFamily",
+      "$value": [
+        "IBM Plex Mono",
+        "ui-monospace",
+        "SFMono-Regular",
+        "Cascadia Mono",
+        "Menlo",
+        "Consolas",
+        "monospace"
+      ]
+    }
+  },
+  "text": {
+    "xs": { "$type": "dimension", "$value": "0.75rem" },
+    "sm": { "$type": "dimension", "$value": "0.8125rem" },
+    "base": { "$type": "dimension", "$value": "1rem" },
+    "lg": { "$type": "dimension", "$value": "1.0625rem" },
+    "xl": { "$type": "dimension", "$value": "1.125rem" },
+    "2xl": { "$type": "dimension", "$value": "1.25rem" },
+    "3xl": { "$type": "dimension", "$value": "1.5rem" },
+    "4xl": { "$type": "dimension", "$value": "1.875rem" }
+  },
+  "leading": {
+    "tight": { "$type": "number", "$value": 1.25 },
+    "latin": { "$type": "number", "$value": 1.55 },
+    "cjk": { "$type": "number", "$value": 1.75 },
+    "mixed": { "$type": "number", "$value": 1.75 }
+  },
+  "tracking": {
+    "body": { "$type": "dimension", "$value": "0em" },
+    "cjk-small": { "$type": "dimension", "$value": "0.03em" }
+  },
+  "measure": {
+    "latin": { "$type": "dimension", "$value": "66ch" },
+    "cjk": { "$type": "dimension", "$value": "36em" }
+  },
+  "paragraph": {
+    "spacing": { "$type": "dimension", "$value": "1em" },
+    "indent": { "$type": "dimension", "$value": "0em" }
+  },
+  "font-weight": {
+    "body": { "$type": "fontWeight", "$value": "400" },
+    "heading": { "$type": "fontWeight", "$value": "600" },
+    "code": { "$type": "fontWeight", "$value": "400" }
+  }
+}

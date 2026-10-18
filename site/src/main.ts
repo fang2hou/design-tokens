@@ -319,7 +319,7 @@ function setupScrollNav(): void {
         }
       }
       event.preventDefault();
-      scroller.scrollLeft += event.deltaY;
+      scroller.scrollBy({ left: event.deltaY, behavior: "instant" });
     },
     { passive: false },
   );
